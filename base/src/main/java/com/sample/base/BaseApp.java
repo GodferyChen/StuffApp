@@ -1,6 +1,7 @@
 package com.sample.base;
 
 import android.app.Application;
+import android.content.Context;
 
 /**
  * @author chen
@@ -9,6 +10,18 @@ import android.app.Application;
  * @Description
  */
 public abstract class BaseApp extends Application{
+
+    private static BaseApp mInstance;
+
+    public static Context getInstance(){
+        return mInstance;
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        mInstance = this;
+    }
 
     /**
      * Application 初始化

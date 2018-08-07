@@ -7,6 +7,7 @@ import com.alibaba.android.arouter.facade.annotation.Interceptor;
 import com.alibaba.android.arouter.facade.callback.InterceptorCallback;
 import com.alibaba.android.arouter.facade.template.IInterceptor;
 import com.sample.compomemtbase.ServiceFactory;
+import com.sample.stuffapp.App;
 
 /**
  * @author chen
