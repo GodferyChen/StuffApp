@@ -64,4 +64,8 @@ dependencies {
 
     // log
     api 'com.elvishew:xlog:1.4.0'
+
+    annotationProcessor "android.arch.lifecycle:compiler:$LIFECYCLE_VERSION"
+    // alternately - if using Java8, use the following instead of compiler
+    api "android.arch.lifecycle:common-java8:$LIFECYCLE_VERSION"
 }

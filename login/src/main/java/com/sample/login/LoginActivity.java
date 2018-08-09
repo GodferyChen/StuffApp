@@ -21,8 +21,10 @@ import butterknife.ButterKnife;
 @Route(path = "/account/login")
 public class LoginActivity extends AppCompatActivity {
 
-    @BindView(R2.id.tv_login_state)
+    @BindView(R.id.tv_login_state)
     TextView tvState;
+    @BindView(R.id.text)
+    TextView tvText;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -44,7 +46,13 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void loginShare(View view) {
-        ARouter.getInstance().build("/share/share").withString("share_content", "分享数据到微博").navigation();
+        ARouter.getInstance().build("/share/share").withString("share_content", "分享数据到微博")
+                .navigation();
+    }
+
+    public void showText(View view) {
+        tvText.setVisibility(View.VISIBLE);
+        tvText.setText("hello espresso!");
     }
 
     private void updateLoginState() {

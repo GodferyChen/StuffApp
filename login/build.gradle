@@ -2,13 +2,17 @@ if (isRunAlone.toBoolean()) {
     apply plugin: 'com.android.application'
 } else {
     apply plugin: 'com.android.library'
+    apply plugin: 'com.jakewharton.butterknife'
 }
-apply plugin: 'com.jakewharton.butterknife'
+
 
 android {
     compileSdkVersion COMPILE_SDK_VERSION.toInteger()
 
     defaultConfig {
+        if (isRunAlone.toBoolean()) {
+            applicationId "com.sample.login"
+        }
         minSdkVersion MIN_SDK_VERSION.toInteger()
         targetSdkVersion TARGET_SDK_VERSION.toInteger()
         versionCode 1
@@ -35,16 +39,36 @@ android {
     }
 
     buildTypes {
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 
+    configurations.all {
+        resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+            def requested = details.requested
+            if (requested.group == "com.android.support") {
+                if (!requested.name.startsWith("multidex")) {
+                    details.useVersion "26.+"
+                }
+            }
+        }
+    }
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    testImplementation 'junit:junit:4.12'
+    //noinspection GradleCompatible
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    androidTestCompile "com.android.support.test:rules:$RULES_VERSION"
+
     implementation project (':base')
     annotationProcessor 'com.alibaba:arouter-compiler:1.1.4'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'

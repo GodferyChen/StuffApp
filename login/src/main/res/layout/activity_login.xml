@@ -43,4 +43,20 @@
         android:onClick="loginShare"
         android:text="去分享组件" />
 
+    <Button
+        android:id="@+id/btn_show"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:onClick="showText"
+        android:text="显示文字"/>
+
+    <TextView
+        android:id="@+id/text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="哈哈哈"
+        android:visibility="gone"
+        android:layout_marginTop="20dp"/>
+
 </LinearLayout>
