@@ -20,9 +20,7 @@ public class CommonHelper {
     /**
      * 检查是否有网络
      */
-    public static boolean isNetworkAvailable(Context context)
-    {
-
+    public static boolean isNetworkAvailable(Context context) {
         NetworkInfo info = getNetworkInfo(context);
         return info != null && info.isAvailable();
     }
@@ -30,13 +28,10 @@ public class CommonHelper {
     /**
      * 检查是否是WIFI
      */
-    public static boolean isWifi(Context context)
-    {
-
+    public static boolean isWifi(Context context) {
         NetworkInfo info = getNetworkInfo(context);
-        if (info != null)
-        {
-            if (info.getType() == ConnectivityManager.TYPE_WIFI){
+        if (info != null) {
+            if (info.getType() == ConnectivityManager.TYPE_WIFI) {
                 return true;
             }
         }
@@ -46,32 +41,25 @@ public class CommonHelper {
     /**
      * 检查是否是移动网络
      */
-    public static boolean isMobile(Context context)
-    {
-
+    public static boolean isMobile(Context context) {
         NetworkInfo info = getNetworkInfo(context);
-        if (info != null)
-        {
-            if (info.getType() == ConnectivityManager.TYPE_MOBILE){
-                return true;
-            }
-        }
-        return false;
+        return info != null && info.getType() == ConnectivityManager.TYPE_MOBILE;
     }
 
-    private static NetworkInfo getNetworkInfo(Context context)
-    {
+    private static NetworkInfo getNetworkInfo(Context context) {
 
-        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        return cm.getActiveNetworkInfo();
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context
+                .CONNECTIVITY_SERVICE);
+        if (cm != null) {
+            return cm.getActiveNetworkInfo();
+        }
+        return null;
     }
 
     /**
      * 检查SD卡是否存在
      */
-    private static boolean checkSdCard()
-    {
-
+    private static boolean checkSdCard() {
         return Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED);
     }
 
@@ -81,19 +69,15 @@ public class CommonHelper {
      *
      * @return
      */
-    private static long getSDcardTotalSize()
-    {
-
-        if (checkSdCard())
-        {
+    private static long getSDcardTotalSize() {
+        if (checkSdCard()) {
             File path = Environment.getExternalStorageDirectory();
             StatFs mStatFs = new StatFs(path.getPath());
             long blockSizeLong = mStatFs.getBlockSizeLong();
             long blockCountLong = mStatFs.getBlockCountLong();
 
             return blockSizeLong * blockCountLong;
-        } else
-        {
+        } else {
             return 0;
         }
     }
@@ -103,17 +87,14 @@ public class CommonHelper {
      *
      * @return
      */
-    private static long getSDcardAvailableSize()
-    {
-
-        if (checkSdCard())
-        {
+    private static long getSDcardAvailableSize() {
+        if (checkSdCard()) {
             File path = Environment.getExternalStorageDirectory();
             StatFs mStatFs = new StatFs(path.getPath());
             long blockSizeLong = mStatFs.getBlockSizeLong();
             long availableBlocksLong = mStatFs.getAvailableBlocksLong();
             return blockSizeLong * availableBlocksLong;
-        } else{
+        } else {
             return 0;
         }
     }
@@ -124,17 +105,14 @@ public class CommonHelper {
      *
      * @return
      */
-    public static long getPhoneTotalSize()
-    {
-
-        if (!checkSdCard())
-        {
+    public static long getPhoneTotalSize() {
+        if (!checkSdCard()) {
             File path = Environment.getDataDirectory();
             StatFs mStatFs = new StatFs(path.getPath());
             long blockSizeLong = mStatFs.getBlockSizeLong();
             long blockCountLong = mStatFs.getBlockCountLong();
             return blockSizeLong * blockCountLong;
-        } else{
+        } else {
             return getSDcardTotalSize();
         }
     }
@@ -145,22 +123,19 @@ public class CommonHelper {
      *
      * @return
      */
-    public static long getPhoneAvailableSize()
-    {
-
-        if (!checkSdCard())
-        {
+    public static long getPhoneAvailableSize() {
+        if (!checkSdCard()) {
             File path = Environment.getDataDirectory();
             StatFs mStatFs = new StatFs(path.getPath());
             long blockSizeLong = mStatFs.getBlockSizeLong();
             long availableBlocksLong = mStatFs.getAvailableBlocksLong();
             return blockSizeLong * availableBlocksLong;
-        } else{
+        } else {
             return getSDcardAvailableSize();
         }
     }
 
-    public static String formatAppName(String appName){
+    public static String formatAppName(String appName) {
         if (appName.contains(".apk")) {
             return appName.replace(".apk", "");
         }
@@ -175,7 +150,6 @@ public class CommonHelper {
      * @return
      */
     public static String formatTime(long ms) {
-
         int ss = 1000;
         int mi = ss * 60;
         int hh = mi * 60;
