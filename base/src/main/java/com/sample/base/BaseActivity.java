@@ -1,5 +1,6 @@
 package com.sample.base;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
@@ -20,14 +21,13 @@ import butterknife.Unbinder;
  */
 public abstract class BaseActivity extends AppCompatActivity {
 
-    protected abstract int getContextViewId();
-
     protected abstract int getLayoutId();
 
     private Unbinder unbinder;
     protected Toolbar mToolbar;
     protected ActionBar mActionBar;
     protected Logger mLogger;
+    protected Context mContext;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.alibaba.android.arouter.facade.annotation.Route;
 import com.alibaba.android.arouter.launcher.ARouter;
+import com.sample.base.BaseActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -19,18 +20,20 @@ import butterknife.ButterKnife;
  * @Description
  */
 @Route(path = "/account/login")
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends BaseActivity {
 
-    @BindView(R.id.tv_login_state)
+    @BindView(R2.id.tv_login_state)
     TextView tvState;
-    @BindView(R.id.text)
+    @BindView(R2.id.text)
     TextView tvText;
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+    protected int getLayoutId() {
+        return R.layout.activity_login;
+    }
 
+    @Override
+    protected void init(Bundle savedInstanceState) {
         ButterKnife.bind(this);
         updateLoginState();
     }
