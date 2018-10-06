@@ -1,26 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/main_layout"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" >
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/main_layout"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <include layout="@layout/include_toolbar"/>
 
     <TextView
         android:id="@+id/tip"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:gravity="center"
         android:text="@string/tip"
         android:textColor="#ff0000"
         android:textIsSelectable="false"
-        android:textSize="10sp" />
+        android:textSize="10sp"/>
 
     <RelativeLayout
         android:id="@+id/first_Text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/tip"
-        android:background="#ffffff" >
+        android:background="#ffffff">
 
         <TextView
             android:id="@+id/text"
@@ -31,7 +33,7 @@
             android:textColor="@android:color/black"
             android:textIsSelectable="false"
             android:textSize="15sp"
-            android:textStyle="italic" />
+            android:textStyle="italic"/>
     </RelativeLayout>
 
     <GridView
@@ -46,6 +48,6 @@
         android:horizontalSpacing="1dp"
         android:numColumns="3"
         android:paddingTop="1dp"
-        android:verticalSpacing="1dp" />
+        android:verticalSpacing="1dp"/>
 
-</RelativeLayout>
+</LinearLayout>

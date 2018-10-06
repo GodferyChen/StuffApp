@@ -42,6 +42,7 @@ dependencies {
     //使用butterknife的module都需要进行配置
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     api 'com.android.support.constraint:constraint-layout:1.1.2'
+    api 'com.android.support:recyclerview-v7:26.1.0'
     api project (':componentbase')
 
     // eventbus
@@ -71,4 +72,7 @@ dependencies {
 
     // java8 stream
     api 'net.sourceforge.streamsupport:streamsupport:1.6.1'
+
+    // ImmersionBar
+    api 'com.gyf.barlibrary:barlibrary:2.3.0'
 }

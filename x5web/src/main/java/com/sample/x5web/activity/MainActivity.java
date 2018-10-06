@@ -50,6 +50,16 @@ public class MainActivity extends BaseActivity {
     }
 
     @Override
+    protected void initImmersionBar() {
+        super.initImmersionBar();
+        mImmersionBar.titleBar(R.id.toolbar).init();
+        mToolbar = findViewById(com.sample.base.R.id.toolbar);
+        if(mToolbar != null){
+            mToolbar.setTitle(getResources().getString(R.string.app_name));
+        }
+    }
+
+    @Override
     protected void onResume() {
         newInit();
         super.onResume();
@@ -91,22 +101,15 @@ public class MainActivity extends BaseActivity {
             mGridView.setAdapter(gridAdapter);
             gridAdapter.notifyDataSetChanged();
             mGridView.setOnItemClickListener((gridView, view, position, id) -> {
-                Intent intent = null;
                 switch (position) {
                     case FILE_CHOOSER:
-                        intent = new Intent(MainActivity.this,
-                                FileChooserActivity.class);
-                        MainActivity.this.startActivity(intent);
+                        intent2Activity(FileChooserActivity.class);
                         break;
                     case FULL_SCREEN_VIDEO:
-                        intent = new Intent(MainActivity.this,
-                                FullScreenActivity.class);
-                        MainActivity.this.startActivity(intent);
+                        intent2Activity(FullScreenActivity.class);
                         break;
                     case TBS_WEB:
-                        intent = new Intent(MainActivity.this,
-                                BrowserActivity.class);
-                        MainActivity.this.startActivity(intent);
+                        intent2Activity(BrowserActivity.class);
                         break;
                     default:
                         break;

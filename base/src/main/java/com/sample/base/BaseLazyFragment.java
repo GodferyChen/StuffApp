@@ -21,15 +21,30 @@ import butterknife.Unbinder;
 /**
  * @author chen
  * @version 1.0.0
- * @date 2018/8/8
- * @Description 当以show()和hide()方法形式加载Fragment
+ * @date 2018/8/21
+ * @Description 当使用viewpager加载Fragment，原理懒加载
  */
-public abstract class BaseFragment extends Fragment {
+public abstract class BaseLazyFragment extends Fragment {
 
     protected Logger mLogger;
     protected Context mContext;
     private Unbinder unbinder;
     protected ImmersionBar mImmersionBar;
+    /**
+     * 是否对用户可见
+     */
+    protected boolean mIsVisible;
+    /**
+     * 是否加载完成
+     * 当执行完onViewCreated方法后即为true
+     */
+    protected boolean mIsPrepare;
+
+    /**
+     * 是否加载完成
+     * 当执行完onViewCreated方法后即为true
+     */
+    protected boolean mIsImmersion;
 
     @Override
     public void onAttach(Context context) {
@@ -55,10 +70,16 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        if (isImmersionBarEnabled()){
-            initImmersionBar();
+        if (isLazyLoad()) {
+            mIsPrepare = true;
+            mIsImmersion = true;
+            onLazyLoad();
+        } else {
+            initData();
+            if (isImmersionBarEnabled()){
+                initImmersionBar();
+            }
         }
-        initData();
         initPresenter();
         initView(view);
     }
@@ -66,7 +87,7 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onPause() {
         //Hide softKeyboard
-        if(null != getActivity()){
+        if (null != getActivity()) {
             WindowHelper.hideKeyboard(getActivity());
         }
         super.onPause();
@@ -77,7 +98,7 @@ public abstract class BaseFragment extends Fragment {
         if (hidden && null != getActivity()) {
             WindowHelper.hideKeyboard(getActivity());
         }
-        if (!hidden && mImmersionBar != null){
+        if (!hidden && mImmersionBar != null) {
             mImmersionBar.init();
         }
 
@@ -87,11 +108,24 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        if(unbinder != null){
+        if (unbinder != null) {
             unbinder.unbind();
         }
-        if (mImmersionBar != null){
+        if (mImmersionBar != null) {
             mImmersionBar.destroy();
+        }
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+
+        if (getUserVisibleHint()) {
+            mIsVisible = true;
+            onVisible();
+        } else {
+            mIsVisible = false;
+            onInvisible();
         }
     }
 
@@ -119,6 +153,39 @@ public abstract class BaseFragment extends Fragment {
      * @param view
      */
     protected abstract void initView(View view);
+
+    /**
+     * 用户不可见执行
+     */
+    protected void onInvisible() {
+
+    }
+
+    /**
+     * 用户可见时执行的操作
+     */
+    protected void onVisible() {
+        onLazyLoad();
+    }
+
+    /**
+     * 是否懒加载
+     *
+     * @return the boolean
+     */
+    protected boolean isLazyLoad() {
+        return true;
+    }
+
+    private void onLazyLoad() {
+        if (mIsVisible && mIsPrepare) {
+            mIsPrepare = false;
+            initData();
+        }
+        if (mIsVisible && mIsImmersion && isImmersionBarEnabled()) {
+            initImmersionBar();
+        }
+    }
 
     /**
      * 是否在Fragment使用沉浸式

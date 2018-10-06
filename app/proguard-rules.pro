@@ -222,3 +222,6 @@
 ############# aspectjrt:1.8.9 #################
 -dontwarn org.aspectj.**
 -keep class org.aspectj.**{*;}
+
+############# ImmersionBar #################
+-keep class com.gyf.barlibrary.* {*;}
